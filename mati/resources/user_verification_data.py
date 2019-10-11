@@ -30,7 +30,7 @@ class UserValidationData(Resource):
     ) -> List[dict]:
         endpoint = cls._endpoint.format(identity_id=identity_id)
         files_metadata = []
-        multiple_files = []
+        files_with_types = []
         for file in user_validation_files:
             files_metadata.append(
                 dict(
@@ -45,10 +45,12 @@ class UserValidationData(Resource):
                     ),
                 )
             )
-            multiple_files.append(('document', open(file.content.name, 'rb')))
+            files_with_types.append(
+                (get_file_type(file.input_type), file.content)
+            )
         resp = cls._client.post(
             endpoint,
             data=dict(inputs=json.dumps(files_metadata)),
-            files=multiple_files,
+            files=files_with_types,
         )
         return resp
