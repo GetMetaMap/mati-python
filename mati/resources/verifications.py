@@ -25,10 +25,9 @@ class Verification(Resource):
         docs = []
         for doc in resp['documents']:
             verification_doc = VerificationDocument(**doc)
-            steps = []
-            for step in doc['steps']:
-                steps.append(VerificationDocumentStep(**step))
-            verification_doc.steps = steps
+            verification_doc.steps = [
+                VerificationDocumentStep(**step) for step in doc['steps']
+            ]
             docs.append(verification_doc)
         resp['documents'] = docs
         return cls(**resp)
