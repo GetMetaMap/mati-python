@@ -27,6 +27,16 @@ class ValidationType(SerializableEnum):
 
 
 @dataclass
+class VerificationDocument:
+    country: str
+    region: str
+    photos: list
+    steps: list
+    type: str
+    fields: dict
+
+
+@dataclass
 class UserValidationFile:
     filename: str
     content: BinaryIO
