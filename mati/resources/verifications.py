@@ -24,10 +24,10 @@ class Verification(Resource):
         resp = cls._client.get(endpoint, token_score=cls._token_score)
         docs = []
         for doc in resp['documents']:
-            verification_doc = VerificationDocument(**doc)
-            verification_doc.steps = [
+            doc['steps'] = [
                 VerificationDocumentStep(**step) for step in doc['steps']
             ]
+            verification_doc = VerificationDocument(**doc)
             docs.append(verification_doc)
         resp['documents'] = docs
         return cls(**resp)
