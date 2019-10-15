@@ -30,19 +30,27 @@ class UserValidationData(Resource):
         files_metadata = []
         files_with_types = []
         for file in user_validation_files:
-            files_metadata.append(
-                dict(
-                    inputType=file.input_type,
-                    group=file.group,
-                    data=dict(
-                        type=file.validation_type,
-                        country=file.country,
-                        page=file.page,
-                        filename=file.filename,
-                        region=file.region,
-                    ),
+            if type(file) == UserValidationFile:
+                files_metadata.append(
+                    dict(
+                        inputType=file.input_type,
+                        group=file.group,
+                        data=dict(
+                            type=file.validation_type,
+                            country=file.country,
+                            page=file.page,
+                            filename=file.filename,
+                            region=file.region,
+                        ),
+                    )
                 )
-            )
+            else:
+                files_metadata.append(
+                    dict(
+                        inputType=file.input_type,
+                        data=dict(filename=file.filename),
+                    )
+                )
             files_with_types.append(
                 (get_file_type(file.input_type), file.content)
             )

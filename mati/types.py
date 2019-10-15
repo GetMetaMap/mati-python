@@ -36,3 +36,10 @@ class UserValidationFile:
     region: str = ''  # 2-digit US State code (if applicable)
     group: int = 0
     page: Union[str, PageType] = PageType.front
+
+
+@dataclass
+class UserValidationLiveness:
+    filename: str
+    content: BinaryIO
+    input_type: Union[str, ValidationInputType]
