@@ -4,7 +4,7 @@ import iso8601
 
 
 class Resource:
-    _client: ClassVar['Client']  # type: ignore
+    _client: ClassVar['mati.Client']  # type: ignore
     _endpoint: ClassVar[str]
     _token_score: ClassVar[Optional[str]] = None
 
