@@ -1,6 +1,6 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
-from typing import BinaryIO, Union
+from typing import BinaryIO, Optional, Union
 
 
 class SerializableEnum(str, Enum):
@@ -34,6 +34,14 @@ class VerificationDocument:
     steps: list
     type: str
     fields: dict
+
+
+@dataclass
+class VerificationDocumentStep:
+    id: str
+    status: int
+    error: Optional[str]
+    data: Optional[dict] = field(default_factory=dict)
 
 
 @dataclass

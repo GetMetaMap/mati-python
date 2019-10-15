@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from typing import ClassVar, List
 
+from ..types import VerificationDocument, VerificationDocumentStep
 from .base import Resource
-from ..types import VerificationDocument
 
 
 @dataclass
@@ -24,6 +24,11 @@ class Verification(Resource):
         resp = cls._client.get(endpoint, token_score=cls._token_score)
         docs = []
         for doc in resp['documents']:
-            docs.append(VerificationDocument(**doc))
+            verification_doc = VerificationDocument(**doc)
+            steps = []
+            for step in doc['steps']:
+                steps.append(VerificationDocumentStep(**step))
+            verification_doc.steps = steps
+            docs.append(verification_doc)
         resp['documents'] = docs
         return cls(**resp)
