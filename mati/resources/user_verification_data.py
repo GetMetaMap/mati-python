@@ -1,7 +1,7 @@
 import json
 from typing import ClassVar, List
 
-from ..types import UserValidationFile
+from ..types import UserValidationFile, ValidationInputType
 from .base import Resource
 
 
@@ -30,7 +30,7 @@ class UserValidationData(Resource):
         files_metadata = []
         files_with_types = []
         for file in user_validation_files:
-            if type(file) == UserValidationFile:
+            if file.input_type != ValidationInputType.selfie_video:
                 files_metadata.append(
                     dict(
                         inputType=file.input_type,
