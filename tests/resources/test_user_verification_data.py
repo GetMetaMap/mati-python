@@ -16,16 +16,16 @@ FIXTURE_DIR = os.path.join(
 
 
 @pytest.mark.vcr
-def test_ine_upload(identity: Identity):
-    filepath = os.path.join(FIXTURE_DIR, 'ine.jpg')
+def test_ine_and_liveness_upload(identity: Identity):
+    filepath_front = os.path.join(FIXTURE_DIR, 'ine_front.jpg')
     filepath_back = os.path.join(FIXTURE_DIR, 'ine_back.jpg')
     filepath_live = os.path.join(FIXTURE_DIR, 'liveness.MOV')
-    with open(filepath, 'rb') as ine, open(filepath_back, 'rb') as back, open(
-        filepath_live, 'rb'
-    ) as live:
+    with open(filepath_front, 'rb') as front, open(
+        filepath_back, 'rb'
+    ) as back, open(filepath_live, 'rb') as live:
         user_validation_file = UserValidationFile(
-            filename='ine.jpg',
-            content=ine,
+            filename='ine_front.jpg',
+            content=front,
             input_type=ValidationInputType.document_photo,
             validation_type=ValidationType.national_id,
             country='MX',
@@ -50,6 +50,4 @@ def test_ine_upload(identity: Identity):
                 user_validation_live,
             ]
         )
-    assert resp[0]['result'] is True
-    assert resp[1]['result'] is True
-    assert resp[2]['result'] is True
+    assert all([resp[i]['result'] for i in range(3)]) is True
