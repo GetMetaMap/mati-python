@@ -1,7 +1,8 @@
 import json
 from typing import Any, ClassVar, Dict, List
 
-from ..types import UserValidationFile, ValidationInputType
+from mati.types import UserValidationFile, ValidationInputType
+
 from .base import Resource
 
 
@@ -54,7 +55,6 @@ class UserValidationData(Resource):
             files_with_types.append(
                 (get_file_type(file.input_type), file.content)
             )
-
         resp = cls._client.post(
             endpoint,
             data=dict(inputs=json.dumps(files_metadata)),
