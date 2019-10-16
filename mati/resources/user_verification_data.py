@@ -54,6 +54,7 @@ class UserValidationData(Resource):
             files_with_types.append(
                 (get_file_type(file.input_type), file.content)
             )
+
         resp = cls._client.post(
             endpoint,
             data=dict(inputs=json.dumps(files_metadata)),
