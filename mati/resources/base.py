@@ -10,5 +10,5 @@ class Resource:
 
     def __post_init__(self) -> None:
         for attr, value in self.__dict__.items():
-            if attr.startswith('date'):
+            if attr.startswith('date') and value:
                 setattr(self, attr, iso8601.parse_date(value))

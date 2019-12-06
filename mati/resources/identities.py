@@ -16,10 +16,10 @@ class Identity(Resource):
     _endpoint: ClassVar[str] = '/v2/identities'
 
     id: str
-    dateCreated: dt.datetime
-    dateUpdated: dt.datetime
-    alive: Optional[bool]
     status: str
+    dateCreated: Optional[dt.datetime] = None
+    dateUpdated: Optional[dt.datetime] = None
+    alive: Optional[bool] = None
     annotatedStatus: Optional[str] = None
     user: Optional[str] = None
     metadata: Union[dict, List[str]] = field(default_factory=dict)
