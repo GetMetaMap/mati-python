@@ -54,3 +54,30 @@ class UserValidationFile:
     region: str = ''  # 2-digit US State code (if applicable)
     group: int = 0
     page: Union[str, PageType] = PageType.front
+
+
+##########
+
+IdentityMetadata = Union[dict, List[str]]
+
+@dataclass
+class EventNameTypes(SerializableEnum):
+    step_completed = 'step_completed',
+    verification_completed = 'verification_completed',
+    verification_expired = 'verification_expired',
+    verification_inputs_completed = 'verification_inputs_completed',
+    verification_started = 'verification_started',
+    verification_updated = 'verification_updated',
+
+
+@dataclass
+class WebhookResource:
+    eventName: EventNameTypes
+    metadata: IdentityMetadata
+    resource: str
+
+
+class AuthType(SerializableEnum):
+    bearer = 'bearer'
+    basic = 'basic'
+    none = 'none'
