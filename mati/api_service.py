@@ -4,7 +4,7 @@ from base64 import b64encode
 from typing import Optional
 
 from mati.call_http import RequestOptions, call_http, ErrorResponse
-from mati.types import AuthType
+from mati.types import AuthType, IdentityMetadata, IdentityResource
 
 API_HOST = 'https://api.getmati.com'
 
@@ -52,11 +52,28 @@ class ApiService:
         when you initialize the service. Usually you do not need to build url by yourself,
         its values come in webhooks or in other resources.
 
-        :param url:
+        :param url: absolute url of the resource
         :return: resource
         :raise ErrorResponse if we get http error
         """
         return self._call_http(url=url)
+
+    def create_identity(self, metadata: IdentityMetadata) -> IdentityResource:
+        """
+        Starts new verification flow and creates identity. You should use result of this method
+        in order to get id for further `#sendInput` calls.
+
+        :param {IdentityMetadata} metadata: payload you want to pass to the identity
+        :return: resource of identity created.
+        :raise ErrorResponse if we get http error
+        """
+        return self._call_http(
+            path='v2/identities',
+            request_options=RequestOptions(
+                method='post',
+                body={'metadata': metadata}
+            )
+        )
 
     def _set_client_auth(self, client_id, client_secret):
         auth = b64encode(f'{client_id}:{client_secret}'.encode('utf-8'))

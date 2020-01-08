@@ -35,7 +35,8 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: null
+    body:
+        string: '{"metadata": {"email": "john@gmail.com"}}'
     headers:
       Accept:
       - '*/*'
@@ -45,11 +46,11 @@ interactions:
       - keep-alive
       User-Agent:
       - python-requests/2.22.0
-    method: GET
-    uri: http://resourceUrl/
+    method: POST
+    uri: https://api.getmati.com/v2/identities
   response:
     body:
-      string: '{"name":"resourceName"}'
+      string: '{"id":"identityId"}'
     headers:
       Access-Control-Allow-Origin:
       - '*'
@@ -72,6 +73,7 @@ interactions:
       X-Xss-Protection:
       - 1; mode=block
     status:
-      code: 200
+      code: 201
       message: OK
+
 version: 1

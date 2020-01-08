@@ -61,6 +61,22 @@ class UserValidationFile:
 IdentityMetadata = Union[dict, List[str]]
 
 @dataclass
+class IdentityStatusTypes(SerializableEnum):
+  deleted = 'deleted',
+  pending = 'pending',
+  rejected = 'rejected',
+  review_needed = 'reviewNeeded',
+  running = 'running',
+  verified = 'verified',
+
+
+@dataclass
+class IdentityResource:
+  id: str
+  status: IdentityStatusTypes
+
+
+@dataclass
 class EventNameTypes(SerializableEnum):
     step_completed = 'step_completed',
     verification_completed = 'verification_completed',

@@ -19,7 +19,7 @@ interactions:
   response:
     body:
       string: '{"access_token": "ACCESS_TOKEN", "expiresIn": 3600, "payload": {"user":
-        {"_id": "ID", "firstName": "FIRST_NAME", "lastName": "LAST_NAME"}}}'
+        {"_id": "ID"}}}'
     headers:
       Connection:
       - keep-alive

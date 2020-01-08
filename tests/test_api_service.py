@@ -17,7 +17,6 @@ webhook_resource_str = '{' \
 
 resource_url = 'http://resourceUrl'
 
-
 def fetch_resource():
     api_service = ApiService()
     api_service.init(client_id, client_secret)
@@ -78,3 +77,10 @@ def test_api_service_fetch_resource():
 def test_api_service_fetch_resource_with_401_error():
     with pytest.raises(ErrorResponse):
         fetch_resource()
+
+
+@pytest.mark.vcr
+def test_api_service_create_identity():
+    api_service = ApiService()
+    api_service.init(client_id, client_secret)
+    assert api_service.create_identity({'email': 'john@gmail.com'})
