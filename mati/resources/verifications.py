@@ -1,3 +1,4 @@
+import datetime as dt
 from dataclasses import dataclass, field
 from typing import Any, ClassVar, Dict, List, Optional
 
@@ -18,6 +19,7 @@ class Verification(Resource):
     identity: Dict[str, str] = field(default_factory=dict)
     hasProblem: Optional[bool] = None
     computed: Optional[Dict[str, Any]] = None
+    obfuscatedAt: Optional[dt.datetime] = None
 
     @classmethod
     def retrieve(cls, verification_id: str, client=None) -> 'Verification':
