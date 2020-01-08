@@ -1,10 +1,12 @@
 import hashlib
 import hmac
+import json
 from base64 import b64encode
-from typing import Optional
+from requests_toolbelt import MultipartEncoder
+from typing import Dict, List, Optional
 
 from mati.call_http import RequestOptions, call_http, ErrorResponse
-from mati.types import AuthType, IdentityMetadata, IdentityResource
+from mati.types import AuthType, IdentityMetadata, IdentityResource, InputData
 
 API_HOST = 'https://api.getmati.com'
 
@@ -72,6 +74,21 @@ class ApiService:
             request_options=RequestOptions(
                 method='post',
                 body={'metadata': metadata}
+            )
+        )
+
+    def send_input(self, identity_id: str, input_data: InputData) -> List[Dict[str, bool]]:
+        files = [('inputs', json.dumps(input_data.inputs))]
+        for fileOptions in input_data.files:
+            files.append((fileOptions.fieldName, fileOptions.fileData))
+        encoder = MultipartEncoder(files)
+        endpoint = 'v2/identities/{identity_id}/send-input'
+        return self._call_http(
+            path=endpoint.format(identity_id=identity_id),
+            request_options=RequestOptions(
+                method='post',
+                body=encoder,
+                headers={'Content-Type': encoder.content_type},
             )
         )
 

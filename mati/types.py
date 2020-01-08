@@ -60,6 +60,19 @@ class UserValidationFile:
 
 IdentityMetadata = Union[dict, List[str]]
 
+
+@dataclass
+class FileOptions:
+    fieldName: str
+    fileData: Union[BinaryIO, str]
+
+
+@dataclass
+class InputData:
+    files: List[FileOptions]
+    inputs: Dict[str, Union[str, int]]
+
+
 @dataclass
 class IdentityStatusTypes(SerializableEnum):
   deleted = 'deleted',
