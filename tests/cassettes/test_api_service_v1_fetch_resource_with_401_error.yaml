@@ -1,0 +1,90 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      User-Agent:
+      - python-requests/2.22.0
+      content-type:
+      - application/x-www-form-urlencoded
+    method: POST
+    uri: https://api.getmati.com/oauth/token
+  response:
+    body:
+      string: '{"access_token": "ACCESS_TOKEN", "expires_in": 3600, "token_type": "Bearer"}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Cache-Control:
+      - no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '76'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 26 Dec 2019 14:52:21 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - X-HTTP-Method-Override
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Powered-By:
+      - Express
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: http://resourceUrl/
+  response:
+    body:
+      string: '{"code":401,"message":"Invalid client: client is invalid","name":"invalid_client","status":401,"statusCode":401}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '23'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 26 Dec 2019 14:09:44 GMT
+      Etag:
+      - W/"8f-ejjPa5NRLKui634I0HWy1uDz4OE"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Powered-By:
+      - Express
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 401
+      message: Unauthorized
+version: 1

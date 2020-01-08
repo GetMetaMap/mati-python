@@ -1,9 +1,9 @@
 SHELL := bash
 PATH := ./venv/bin:${PATH}
-PYTHON = python3.7
+PYTHON = python3
 PROJECT = mati
 isort = isort -rc -ac $(PROJECT) tests setup.py
-black = black -S -l 79 --target-version py37 $(PROJECT) tests setup.py
+black = black -S -l 79 --target-version py36 $(PROJECT) tests setup.py
 
 
 all: test

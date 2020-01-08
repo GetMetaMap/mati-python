@@ -2,7 +2,7 @@ import datetime as dt
 from dataclasses import dataclass, field
 from typing import ClassVar, List, Optional, Union
 
-from ..types import UserValidationFile
+from ..types import UserValidationFile, IdentityMetadata
 from .base import Resource
 from .user_verification_data import UserValidationData
 
@@ -22,7 +22,7 @@ class Identity(Resource):
     status: str
     annotatedStatus: Optional[str] = None
     user: Optional[str] = None
-    metadata: Union[dict, List[str]] = field(default_factory=dict)
+    metadata: IdentityMetadata = field(default_factory=dict)
     fullName: Optional[str] = None
     facematchScore: Optional[float] = None
 
