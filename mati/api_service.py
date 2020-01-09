@@ -92,9 +92,8 @@ class ApiService:
         for fileOptions in send_input_request.files:
             files.append((fileOptions.fieldName, fileOptions.fileData))
         encoder = MultipartEncoder(files)
-        endpoint = 'v2/identities/{identity_id}/send-input'
         return self._call_http(
-            path=endpoint.format(identity_id=identity_id),
+            path=f'v2/identities/{identity_id}/send-input',
             request_options=RequestOptions(
                 method='post',
                 body=encoder,
