@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import Any, ClassVar, Dict, List, Optional
 
-from ..types import VerificationDocument, VerificationDocumentStep
+from ..types import VerificationDocument, VerificationStep
 from .base import Resource
 
 
@@ -26,7 +26,7 @@ class Verification(Resource):
         docs = []
         for doc in resp['documents']:
             doc['steps'] = [
-                VerificationDocumentStep(**step) for step in doc['steps']
+                VerificationStep(**step) for step in doc['steps']
             ]
             docs.append(VerificationDocument(**doc))
         resp['documents'] = docs

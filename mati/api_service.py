@@ -6,7 +6,7 @@ from requests_toolbelt import MultipartEncoder
 from typing import Dict, List, Optional
 
 from mati.call_http import RequestOptions, call_http, ErrorResponse
-from mati.types import AuthType, IdentityMetadata, IdentityResource, InputData
+from mati.types import AuthType, IdentityMetadata, IdentityResource, InputRequestData
 
 API_HOST = 'https://api.getmati.com'
 
@@ -77,7 +77,7 @@ class ApiService:
             )
         )
 
-    def send_input(self, identity_id: str, input_data: InputData) -> List[Dict[str, bool]]:
+    def send_input(self, identity_id: str, input_data: InputRequestData) -> List[Dict[str, bool]]:
         files = [('inputs', json.dumps(input_data.inputs))]
         for fileOptions in input_data.files:
             files.append((fileOptions.fieldName, fileOptions.fileData))
