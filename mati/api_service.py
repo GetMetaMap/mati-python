@@ -6,7 +6,7 @@ from requests_toolbelt import MultipartEncoder
 from typing import Dict, List, Optional
 
 from mati.call_http import RequestOptions, call_http, ErrorResponse
-from mati.types import AuthType, IdentityMetadata, IdentityResource, InputsData
+from mati.types import AuthType, IdentityMetadata, IdentityResource, SendInputRequest
 
 API_HOST = 'https://api.getmati.com'
 
@@ -77,19 +77,19 @@ class ApiService:
             )
         )
 
-    def send_input(self, identity_id: str, inputs_data: InputsData) -> List[Dict[str, bool]]:
+    def send_input(self, identity_id: str, send_input_request: SendInputRequest) -> List[Dict[str, bool]]:
         """
         Sends inputs data to process identity verification. Inputs can contain combined 
         document/selfie photo/selfie video data input and should represent merchant's
         "Verification requirements" and "Biometric requirements" configurations to complete verification.
 
         :param {identity_id} identity_id: an identity id obtained from #create_identity response
-        :param {InputsData} inputs_data: contains files data and metadata field and files itself
+        :param {SendInputRequest} send_input_request: contains files data and metadata field and files itself
         :return: ordered list with result of upload (order in the list corresponds to inputs order)
         :raise ErrorResponse if we get http error
         """
-        files = [('inputs', json.dumps(inputs_data.inputs))]
-        for fileOptions in inputs_data.files:
+        files = [('inputs', json.dumps(send_input_request.inputs))]
+        for fileOptions in send_input_request.files:
             files.append((fileOptions.fieldName, fileOptions.fileData))
         encoder = MultipartEncoder(files)
         endpoint = 'v2/identities/{identity_id}/send-input'

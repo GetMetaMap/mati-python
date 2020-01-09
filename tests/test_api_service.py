@@ -8,7 +8,7 @@ from mati.call_http import ErrorResponse
 from mati.types import (
     DocumentType,
     Input,
-    InputsData,
+    SendInputRequest,
     MediaInputOptions,
     PageType,
     PhotoInputData,
@@ -136,5 +136,5 @@ def test_api_service_send_input():
     ]
     assert api_service.send_input(
         identity_id='identityId',
-        inputs_data=InputsData(files, inputs),
+        send_input_request=SendInputRequest(files, inputs),
     )

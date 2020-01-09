@@ -113,7 +113,7 @@ class Input(dict):
 
 
 @dataclass
-class InputsData:
+class SendInputRequest:
     files: List[MediaInputOptions]
     inputs: List[Input]
 
