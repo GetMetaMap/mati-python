@@ -12,7 +12,6 @@ class RequestOptions:
     method: str = 'get'
     headers: Dict[str, str] = None
     body: Union[Dict, MultipartEncoder] = None
-    data: Dict = None
 
 
 class ErrorResponse(Exception):
@@ -25,7 +24,7 @@ def call_http(request_url: str, request_options: RequestOptions):
         request_options.method,
         request_url,
         headers=request_options.headers,
-        data=request_options.data,
+        data=request_options.body,
     )
     if not response.ok:
         print(f'response.text: {response.text}')
