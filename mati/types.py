@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from enum import Enum
 from typing import BinaryIO, Dict, List, Optional, Union
 
@@ -62,7 +62,7 @@ IdentityMetadata = Union[dict, List[str]]
 
 
 @dataclass
-class FileOptions:
+class MediaInputOptions:
     fieldName: str
     fileData: Union[BinaryIO, str]
 
@@ -90,22 +90,31 @@ class SelfiePhotoInputData(InputData):
     pass
 
 
-class Input(object):
+class Input(dict):
     def __init__(
             self,
             input_type: VerificationInputType,
             data: Union[PhotoInputData, SelfiePhotoInputData, SelfieVideoInputData],
             group: int = None
     ):
-        self.data = data
-        self.inputType = input_type
         if group is not None:
-            self.group = group
+            dict.__init__(
+                self,
+                input_type=input_type,
+                data=asdict(data),
+                group=group,
+            )
+        else:
+            dict.__init__(
+                self,
+                input_type=input_type,
+                data=asdict(data),
+            )
 
 
 @dataclass
-class InputRequestData:
-    files: List[FileOptions]
+class InputsData:
+    files: List[MediaInputOptions]
     inputs: List[Input]
 
 

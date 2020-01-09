@@ -7,8 +7,8 @@ from mati.resources import Identity
 from mati.types import (
     PageType,
     UserValidationFile,
-    ValidationInputType,
-    ValidationType,
+    VerificationInputType,
+    DocumentType,
 )
 
 FIXTURE_DIR = os.path.join(
@@ -28,22 +28,22 @@ def test_ine_and_liveness_upload(identity: Identity):
         user_validation_file = UserValidationFile(
             filename='ine_front.jpg',
             content=front,
-            input_type=ValidationInputType.document_photo,
-            validation_type=ValidationType.national_id,
+            input_type=VerificationInputType.document_photo,
+            validation_type=DocumentType.national_id,
             country='MX',
         )
         user_validation_file_back = UserValidationFile(
             filename='ine_back.jpg',
             content=back,
-            input_type=ValidationInputType.document_photo,
-            validation_type=ValidationType.national_id,
+            input_type=VerificationInputType.document_photo,
+            validation_type=DocumentType.national_id,
             country='MX',
             page=PageType.back,
         )
         user_validation_live = UserValidationFile(
             filename='liveness.MOV',
             content=live,
-            input_type=ValidationInputType.selfie_video,
+            input_type=VerificationInputType.selfie_video,
         )
         resp = identity.upload_validation_data(
             [

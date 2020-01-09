@@ -1,9 +1,20 @@
 from contextlib import contextmanager
 
 import pytest
+import io
 
 from mati import ApiService
 from mati.call_http import ErrorResponse
+from mati.types import (
+    DocumentType,
+    Input,
+    InputsData,
+    MediaInputOptions,
+    PageType,
+    PhotoInputData,
+    SelfieVideoInputData,
+    VerificationInputType,
+)
 
 client_id: str = 'clientId'
 client_secret: str = 'clientSecret'
@@ -84,3 +95,46 @@ def test_api_service_create_identity():
     api_service = ApiService()
     api_service.init(client_id, client_secret)
     assert api_service.create_identity({'email': 'john@gmail.com'})
+
+
+@pytest.mark.vcr
+def test_api_service_send_input():
+    api_service = ApiService()
+    api_service.init(client_id, client_secret)
+    inputs = [
+        Input(
+            input_type=VerificationInputType.document_photo,
+            group=0,
+            data=PhotoInputData(
+                type=DocumentType.national_id,
+                country='MX',
+                page=PageType.front,
+                filename='front.jpg'
+            )
+        ),
+        Input(
+            input_type=VerificationInputType.document_photo,
+            group=0,
+            data=PhotoInputData(
+                type=DocumentType.national_id,
+                country='MX',
+                page=PageType.back,
+                filename='back.jpg'
+            )
+        ),
+        Input(
+            input_type=VerificationInputType.selfie_video,
+            data=SelfieVideoInputData(
+                filename='selfie.mp4',
+            )
+        ),
+    ]
+    files = [
+        MediaInputOptions('document', io.BytesIO()),
+        MediaInputOptions('document', io.BytesIO()),
+        MediaInputOptions('video', io.BytesIO()),
+    ]
+    assert api_service.send_input(
+        identity_id='identityId',
+        inputs_data=InputsData(files, inputs),
+    )
