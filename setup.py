@@ -35,6 +35,7 @@ setup(
         'dataclasses>=0.6;python_version<"3.7"',
         'requests>=2.22.0,<3.0.0',
         'iso8601>=0.1.12,<0.2.0',
+        'requests_toolbelt>=0.8.0,<1.0.0',
     ],
     setup_requires=['pytest-runner'],
     tests_require=test_requires,

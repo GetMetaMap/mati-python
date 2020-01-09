@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from enum import Enum
 from typing import BinaryIO, Dict, List, Optional, Union
 
@@ -13,13 +13,13 @@ class PageType(SerializableEnum):
     back = 'back'
 
 
-class ValidationInputType(SerializableEnum):
+class VerificationInputType(SerializableEnum):
     document_photo = 'document-photo'
     selfie_photo = 'selfie-photo'
     selfie_video = 'selfie-video'
 
 
-class ValidationType(SerializableEnum):
+class DocumentType(SerializableEnum):
     driving_license = 'driving-license'
     national_id = 'national-id'
     passport = 'passport'
@@ -27,7 +27,7 @@ class ValidationType(SerializableEnum):
 
 
 @dataclass
-class VerificationDocumentStep:
+class VerificationStep:
     id: str
     status: int
     error: Optional[str] = None
@@ -39,7 +39,7 @@ class VerificationDocument:
     country: str
     region: str
     photos: List[str]
-    steps: List[VerificationDocumentStep]
+    steps: List[VerificationStep]
     type: str
     fields: Optional[dict] = None
 
@@ -48,8 +48,8 @@ class VerificationDocument:
 class UserValidationFile:
     filename: str
     content: BinaryIO
-    input_type: Union[str, ValidationInputType]
-    validation_type: Union[str, ValidationType] = ''
+    input_type: Union[str, VerificationInputType]
+    validation_type: Union[str, DocumentType] = ''
     country: str = ''  # alpha-2 code: https://www.iban.com/country-codes
     region: str = ''  # 2-digit US State code (if applicable)
     group: int = 0
@@ -60,20 +60,78 @@ class UserValidationFile:
 
 IdentityMetadata = Union[dict, List[str]]
 
+
+@dataclass
+class MediaInputOptions:
+    fieldName: str
+    fileData: Union[BinaryIO, str]
+
+
+@dataclass
+class InputData:
+    filename: str
+
+
+@dataclass
+class PhotoInputData(InputData):
+    type: DocumentType
+    page: PageType
+    country: str
+    region: str = None
+
+
+@dataclass
+class SelfieVideoInputData(InputData):
+    pass
+
+
+@dataclass
+class SelfiePhotoInputData(InputData):
+    pass
+
+
+class Input(dict):
+    def __init__(
+            self,
+            input_type: VerificationInputType,
+            data: Union[PhotoInputData, SelfiePhotoInputData, SelfieVideoInputData],
+            group: int = None
+    ):
+        if group is not None:
+            dict.__init__(
+                self,
+                input_type=input_type,
+                data=asdict(data),
+                group=group,
+            )
+        else:
+            dict.__init__(
+                self,
+                input_type=input_type,
+                data=asdict(data),
+            )
+
+
+@dataclass
+class SendInputRequest:
+    files: List[MediaInputOptions]
+    inputs: List[Input]
+
+
 @dataclass
 class IdentityStatusTypes(SerializableEnum):
-  deleted = 'deleted',
-  pending = 'pending',
-  rejected = 'rejected',
-  review_needed = 'reviewNeeded',
-  running = 'running',
-  verified = 'verified',
+    deleted = 'deleted',
+    pending = 'pending',
+    rejected = 'rejected',
+    review_needed = 'reviewNeeded',
+    running = 'running',
+    verified = 'verified',
 
 
 @dataclass
 class IdentityResource:
-  id: str
-  status: IdentityStatusTypes
+    id: str
+    status: IdentityStatusTypes
 
 
 @dataclass

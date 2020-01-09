@@ -1,7 +1,7 @@
 import json
 from typing import Any, BinaryIO, ClassVar, Dict, List, Tuple
 
-from mati.types import UserValidationFile, ValidationInputType
+from mati.types import UserValidationFile, VerificationInputType
 
 from .base import Resource
 
@@ -28,7 +28,7 @@ class UserValidationData(Resource):
     def _append_file(
         files_metadata: List[Dict[str, Any]], file: UserValidationFile
     ):
-        if file.input_type == ValidationInputType.document_photo:
+        if file.input_type == VerificationInputType.document_photo:
             files_metadata.append(
                 dict(
                     inputType=file.input_type,
