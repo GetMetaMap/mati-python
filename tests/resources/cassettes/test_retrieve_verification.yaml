@@ -60,7 +60,7 @@ interactions:
       User-Agent:
       - python-requests/2.22.0
     method: GET
-    uri: https://api.getmati.com/api/v1/verifications/5d9fb1f5bfbfac001a349bfb
+    uri: https://api.getmati.com/v2/verifications/5d9fb1f5bfbfac001a349bfb
   response:
     body:
       string: '{"expired": false, "steps": [], "documents": [{"country": "MX", "region":
