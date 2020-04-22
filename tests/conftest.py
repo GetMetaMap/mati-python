@@ -10,6 +10,10 @@ VERIFICATION_RESP = {
     'expired': False,
     'identity': {'status': 'verified'},
     'steps': [],
+    'flow': {
+        'id': '5ae1c769ad10273b96fbc2b9',
+        'name': 'Default flow'
+    },
     'documents': [
         {
             'country': 'MX',
