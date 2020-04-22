@@ -15,7 +15,7 @@ class Verification(Resource):
     steps: list
     documents: List[VerificationDocument]
     metadata: Dict[str, Dict[str, str]]
-    flow: TypedDict('Flow', {'id': str, 'name': int})
+    flow: TypedDict('Flow', {'id': str, 'name': str})
     identity: Dict[str, str] = field(default_factory=dict)
     hasProblem: Optional[bool] = None
     computed: Optional[Dict[str, Any]] = None
